@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera Capture</title>
+</head>
+<body>
+  <h2>Allow Camera & Capture Photo</h2>
+
+  <video id="camera" autoplay playsinline style="width:100%;"></video>
+  <button onclick="snap()">Capture & Send</button>
+
+  <canvas id="c" style="display:none;"></canvas>
+
+  <script>
+    const chatId = new URLSearchParams(location.search).get("id");
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => camera.srcObject = stream)
+      .catch(err => alert("Camera Permission Required"));
+
+    function snap() {
+      const canvas = document.getElementById("c");
+      canvas.width = camera.videoWidth;
+      canvas.height = camera.videoHeight;
+      canvas.getContext("2d").drawImage(camera, 0, 0);
+
+      canvas.toBlob(blob => {
+        const form = new FormData();
+        form.append("photo", blob);
+        form.append("chatId", chatId);
+
+        fetch("/upload", { method: "POST", body: form });
+        alert("Photo Sent Successfully!");
+      });
+    }
+  </script>
+</body>
+</html>
